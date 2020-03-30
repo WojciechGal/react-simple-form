@@ -18,8 +18,11 @@
 .env.test.local
 .env.production.local
 
-#Intellij
+### IntelliJ IDEA ###
 .idea
+*.iws
+*.iml
+*.ipr
 
 npm-debug.log*
 yarn-debug.log*
