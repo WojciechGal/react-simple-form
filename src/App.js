@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Form from "./Form";
+import MyCarousel from "./MyCarousel"
 
 class App extends Component {
   state = {
@@ -24,6 +24,8 @@ class App extends Component {
         <p>
           {JSON.stringify(this.state.fields, null, 2)}
         </p>
+        <hr/>
+        <MyCarousel/>
       </div>
     );
   }
