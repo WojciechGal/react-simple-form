@@ -72,6 +72,62 @@ export default class Form extends React.Component {
 
     };
 
+    checkUser = async e => {
+        e.preventDefault();
+
+        axios({
+            method: 'get',
+            url: 'http://c0027b25.ngrok.io/users/sec',
+            // headers: {'Content-Type': 'multipart/form-data' }
+        })
+            .then(function (response) {
+                //handle success
+                console.log(response);
+            })
+            .catch(function (response) {
+                //handle error
+                console.log(response);
+            });
+
+        this.setState({
+            username: "",
+            password: ""
+        });
+        this.props.onChange({
+            username: "",
+            password: ""
+        });
+
+    };
+
+    onLogout = async e => {
+        e.preventDefault();
+
+        axios({
+            method: 'get',
+            url: 'http://c0027b25.ngrok.io/users/logout',
+            // headers: {'Content-Type': 'multipart/form-data' }
+        })
+            .then(function (response) {
+                //handle success
+                console.log(response);
+            })
+            .catch(function (response) {
+                //handle error
+                console.log(response);
+            });
+
+        this.setState({
+            username: "",
+            password: ""
+        });
+        this.props.onChange({
+            username: "",
+            password: ""
+        });
+
+    };
+
     render() {
         return (
             <form>
@@ -91,6 +147,10 @@ export default class Form extends React.Component {
                 />
                 <br/>
                 <button onClick={e => this.onSubmit(e)}>Submit</button>
+                <br/>
+                <button onClick={e => this.checkUser(e)}>Check User</button>
+                <br/>
+                <button onClick={e => this.onLogout(e)}>Logout</button>
             </form>
         );
     }
