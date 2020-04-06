@@ -17,10 +17,27 @@ export default class Form extends React.Component {
     onSubmit = async e => {
         e.preventDefault();
 
-        // axios.post('http://c0027b25.ngrok.io/users/login', {
-        //     'username': this.state.username,
-        //     'password': this.state.password,
-        // })
+        axios.post('http://4bea6c2a.ngrok.io/users/login', {
+                'username': this.state.username,
+                'password': this.state.password,
+            }
+        ).then(function (response) {
+            //handle success
+            console.log(response);
+            localStorage.setItem('token', response.data.accessToken)
+            /*
+            LOCALSTORAGE VS SESSIONSTORAGE
+            localStorage and sessionStorage accomplish the exact same thing
+            and have the same API, but with sessionStorage the data is persisted
+            only until the window or tab is closed, while with localStorage the
+            data is persisted until the user manually clears the browser cache
+            or until your web app clears the data. The examples in this post are
+            for localStorage, but the same syntax works for sessionStorage.
+            */
+        }).catch(function (response) {
+            //handle error
+            console.log(response);
+        });
 
         // const headers = {
         //     'Content-Type': 'text/plain'
@@ -41,25 +58,25 @@ export default class Form extends React.Component {
         //         }
         //     )
 
-        var bodyFormData = new FormData();
-
-        bodyFormData.set('username', this.state.username);
-        bodyFormData.set('password', this.state.password);
-
-        axios({
-            method: 'post',
-            url: 'http://fb7f2fa9.ngrok.io/users/login',
-            data: bodyFormData,
-            headers: {'Content-Type': 'multipart/form-data' }
-        })
-            .then(function (response) {
-                //handle success
-                console.log(response);
-            })
-            .catch(function (response) {
-                //handle error
-                console.log(response);
-            });
+        // var bodyFormData = new FormData();
+        //
+        // bodyFormData.set('username', this.state.username);
+        // bodyFormData.set('password', this.state.password);
+        //
+        // axios({
+        //     method: 'post',
+        //     url: 'http://54d256d1.ngrok.io/users/login',
+        //     data: bodyFormData,
+        //     headers: {'Content-Type': 'multipart/form-data' }
+        // })
+        //     .then(function (response) {
+        //         //handle success
+        //         console.log(response);
+        //     })
+        //     .catch(function (response) {
+        //         //handle error
+        //         console.log(response);
+        //     });
 
         this.setState({
             username: "",
@@ -69,63 +86,29 @@ export default class Form extends React.Component {
             username: "",
             password: ""
         });
-
     };
 
     checkUser = async e => {
         e.preventDefault();
 
         axios({
-            method: 'get',
-            url: 'http://fb7f2fa9.ngrok.io/users/sec',
-            // headers: {'Content-Type': 'multipart/form-data' }
-        })
-            .then(function (response) {
-                //handle success
-                console.log(response);
-            })
-            .catch(function (response) {
-                //handle error
-                console.log(response);
-            });
-
-        this.setState({
-            username: "",
-            password: ""
+                method: 'get',
+                url: 'http://4bea6c2a.ngrok.io/users/sec',
+                headers: {'Authorization': 'Bearer ' + localStorage.getItem('token') }
+            }
+        ).then(function (response) {
+            //handle success
+            console.log(response);
+        }).catch(function (response) {
+            //handle error
+            console.log(response);
         });
-        this.props.onChange({
-            username: "",
-            password: ""
-        });
-
     };
 
     onLogout = async e => {
         e.preventDefault();
 
-        axios({
-            method: 'get',
-            url: 'http://fb7f2fa9.ngrok.io/users/logout',
-            // headers: {'Content-Type': 'multipart/form-data' }
-        })
-            .then(function (response) {
-                //handle success
-                console.log(response);
-            })
-            .catch(function (response) {
-                //handle error
-                console.log(response);
-            });
-
-        this.setState({
-            username: "",
-            password: ""
-        });
-        this.props.onChange({
-            username: "",
-            password: ""
-        });
-
+        localStorage.clear()
     };
 
     render() {
