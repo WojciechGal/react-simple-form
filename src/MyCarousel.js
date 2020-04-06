@@ -5,7 +5,7 @@ export default class MyCarousel extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className={'my-carousel'}>
                 <Carousel>
                     <Carousel.Item>
                         <img
